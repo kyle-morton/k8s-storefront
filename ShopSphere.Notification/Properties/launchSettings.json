@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShopSphere.Notification": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

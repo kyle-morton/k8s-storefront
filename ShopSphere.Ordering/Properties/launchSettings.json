@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShopSphere.Ordering": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

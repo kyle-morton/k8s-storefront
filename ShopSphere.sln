@@ -13,7 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSphere.Shipping", "Shop
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{CA35EFEC-3405-4764-A901-7F29146533B3}"
 	ProjectSection(SolutionItems) = preProject
-		shopshere-app-depl.yaml = shopshere-app-depl.yaml
+		shopsphere-app-depl.yaml = shopsphere-app-depl.yaml
+		shopsphere-notification-depl.yaml = shopsphere-notification-depl.yaml
+		shopsphere-ordering-depl.yaml = shopsphere-ordering-depl.yaml
+		shopsphere-shipping-depl.yaml = shopsphere-shipping-depl.yaml
 	EndProjectSection
 EndProject
 Global
