@@ -1,4 +1,4 @@
-namespace StoreFront.Models;
+namespace ShopSphere.App.Models;
 
 public class ErrorViewModel
 {
