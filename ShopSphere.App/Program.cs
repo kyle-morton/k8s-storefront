@@ -1,4 +1,28 @@
+using Microsoft.EntityFrameworkCore;
+using ShopSphere.App.Data;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// DbContext - memory if not prod, sql server if prod
+if (!builder.Environment.IsProduction())
+{
+    Console.WriteLine("Using in memory db");
+    builder.Services.AddDbContext<ShopSphereDbContext>(options =>
+    {
+        options.UseInMemoryDatabase("InMemoryDB");
+    });
+}
+else
+{
+    var connString = builder.Configuration.GetConnectionString("ConnStr");
+    Console.WriteLine("Using in sql server - " + connString);
+
+    builder.Services.AddDbContext<ShopSphereDbContext>(options =>
+    {
+        options.UseSqlServer(connString);
+    });
+}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
