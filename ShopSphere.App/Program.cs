@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ShopSphere.App.Data;
-using System;
+using ShopSphere.App.Repos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +24,11 @@ else
     });
 }
 
+// Register Automapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -46,7 +51,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Orders}/{action=Index}/{id?}");
 
 // autopopulate db
 DbInitializer.PopulateDb(app);

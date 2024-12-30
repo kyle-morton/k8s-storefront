@@ -1,0 +1,22 @@
+﻿@model ShopSphere.App.ViewModels.Orders.IndexViewModel;
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Orders - @Model.Orders.Count</h1>
+    @foreach(var order in Model.Orders) 
+    {
+        <hr>
+        <p>
+            ID: @order.Id, 
+            Items: @order.Items
+            @* User: @order.User.Name, 
+             *@
+        </p>
+        @* <p>
+            Shipping To: @order.ShippingAddress.Location
+        </p>s *@
+    }
+    
+</div>
