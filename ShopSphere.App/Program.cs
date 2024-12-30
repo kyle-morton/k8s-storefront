@@ -5,16 +5,16 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // DbContext - memory if not prod, sql server if prod
-// if (!builder.Environment.IsProduction())
-// {
-//     Console.WriteLine("Using in memory db");
-//     builder.Services.AddDbContext<ShopSphereDbContext>(options =>
-//     {
-//         options.UseInMemoryDatabase("InMemoryDB");
-//     });
-// }
-// else
-// {
+if (!builder.Environment.IsProduction())
+{
+    Console.WriteLine("Using in memory db");
+    builder.Services.AddDbContext<ShopSphereDbContext>(options =>
+    {
+        options.UseInMemoryDatabase("InMemoryDB");
+    });
+}
+else
+{
     var connString = builder.Configuration.GetConnectionString("DbConnStr");
     Console.WriteLine("Using in sql server - " + connString);
 
@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.UseSqlServer(connString);
     });
-// }
+}
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -47,5 +47,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// autopopulate db
+DbInitializer.PopulateDb(app);
 
 app.Run();
