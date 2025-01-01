@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopsphere-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopsphere-app
+  template:
+    metadata:
+      labels:
+        app: shopsphere-app
+    spec:
+      containers:
+        - name: shopsphere-app
+          image: kylemorton5770/shopsphere-app:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopsphere-app-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: shopsphere-app
+  ports:
+  - name: shopsphere-app
+    protocol: TCP
+    port: 8080 # inside the cluster
+    targetPort: 8080 # matching port on outside
+#   - name: plafromgrpc
+#     protocol: TCP
+#     port: 666
+#     targetPort: 666
