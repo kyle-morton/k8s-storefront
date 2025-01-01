@@ -28,6 +28,7 @@ else
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

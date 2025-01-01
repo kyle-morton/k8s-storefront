@@ -8,16 +8,14 @@ public interface IOrderRepo {
     Task<List<Order>> GetOrdersForUser(int userId);
     Task<Order> Get(int orderId);
     Task<List<Order>> Get();
+    Task<Order> Create(Order order) ;
 }
 
-public class OrderRepo : IOrderRepo
+public class OrderRepo : RepoBase, IOrderRepo
 {
 
-    private ShopSphereDbContext _context;
-
-    public OrderRepo(ShopSphereDbContext context) 
+    public OrderRepo(ShopSphereDbContext context) : base(context)
     {
-        _context = context;
     }
 
     /// <summary>
@@ -54,5 +52,12 @@ public class OrderRepo : IOrderRepo
         return orders; 
     }
 
+    public async Task<Order> Create(Order order) 
+    {
+        await _context.Orders.AddAsync(order);
+        await _context.SaveChangesAsync();
+
+        return order;
+    }
 
 }
