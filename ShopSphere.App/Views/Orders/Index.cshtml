@@ -4,19 +4,26 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Orders - @Model.Orders.Count</h1>
-    @foreach(var order in Model.Orders) 
-    {
-        <hr>
-        <p>
-            ID: @order.Id, 
-            Items: @order.Items
-            @* User: @order.User.Name, 
-             *@
-        </p>
-        @* <p>
-            Shipping To: @order.ShippingAddress.Location
-        </p>s *@
-    }
-    
+    <h1 class="display-4">Orders (@Model.Orders.Count)</h1>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Items</th>
+                <th>Shipping Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.User.Name</td>
+                    <td>@order.Items</td>
+                    <td>@order.ShippingAddress.Location</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

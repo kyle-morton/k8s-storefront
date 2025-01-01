@@ -28,6 +28,7 @@ public class OrderRepo : IOrderRepo
     {
         var orders = await _context.Orders
             .Include(o => o.ShippingAddress)
+            .Include(o => o.User)
             .ToListAsync();
 
         return orders; 
@@ -46,6 +47,7 @@ public class OrderRepo : IOrderRepo
     {
         var orders = await _context.Orders
             .Include(o => o.ShippingAddress)
+            .Include(o => o.User)
             .Where(o => o.UserId == userId)
             .ToListAsync();
 

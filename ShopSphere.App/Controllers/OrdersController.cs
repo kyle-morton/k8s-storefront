@@ -11,7 +11,7 @@ using ShopSphere.App.ViewModels.Orders;
 
 namespace ShopSphere.App.Controllers;
 
-[Route("[controller]")]
+[Route("")]
 public class OrdersController : Controller
 {
     private readonly ILogger<OrdersController> _logger;
