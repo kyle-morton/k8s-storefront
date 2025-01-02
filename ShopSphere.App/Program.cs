@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ShopSphere.App.Clients;
 using ShopSphere.App.Data;
 using ShopSphere.App.Repos;
 
@@ -26,6 +27,9 @@ else
 
 // Register Automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// single MB client for entire app lifecycle
+builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
