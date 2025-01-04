@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopSphere.App.Clients;
 using ShopSphere.App.Data;
 using ShopSphere.App.Repos;
+using ShopSphere.App.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // single MB client for entire app lifecycle
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
 
+// Repo
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+
+// Services
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

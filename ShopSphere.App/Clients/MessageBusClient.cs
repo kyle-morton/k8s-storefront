@@ -2,12 +2,13 @@
 using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
+using ShopSphere.App.Clients.Models;
 
 namespace ShopSphere.App.Clients;
 
 public interface IMessageBusClient
 {
-    void Publish(object model);
+    void Publish<T>(T model, string eventName);
 }
 
 public class MessageBusClient : IMessageBusClient
@@ -46,14 +47,20 @@ public class MessageBusClient : IMessageBusClient
 
     #region PUBLISH
 
-    public void Publish(object model)
+    public void Publish<T>(T model, string eventName)
     {
-        var message = JsonSerializer.Serialize(model);
+        var message = new Message<T>
+        {
+            Payload = model,
+            Event = eventName
+        };
+
+        var messageJson = JsonSerializer.Serialize(message);
 
         if (_connection.IsOpen)
         {
             Console.WriteLine("MessageBusClient: RabbitMQ Connection Open, sending message...");
-            SendMessage(message);
+            SendMessage(messageJson);
         }
         else
         {

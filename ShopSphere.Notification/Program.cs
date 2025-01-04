@@ -12,7 +12,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 // runs in the background during lifetime of app
-builder.Services.AddHostedService<MessageBusClient>();
+builder.Services.AddHostedService<MessageBusListener>();
 
 using IHost host = builder.Build();
 

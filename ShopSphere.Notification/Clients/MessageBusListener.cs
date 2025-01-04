@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -7,7 +8,7 @@ using ShopSphere.Notification.Events;
 
 namespace ShopSphere.Notification.Clients.Models;
 
-public class MessageBusClient : BackgroundService
+public class MessageBusListener : BackgroundService
 {
 
     private readonly IConfiguration _config;
@@ -16,7 +17,7 @@ public class MessageBusClient : BackgroundService
     private IModel _channel;
     private string _queueName;
 
-    public MessageBusClient(IConfiguration config, IEventProcessor eventProcessor)
+    public MessageBusListener(IConfiguration config, IEventProcessor eventProcessor)
     {
         _config = config;
         Console.WriteLine($"Config: {_config["RabbitMQ:Host"]}:{_config["RabbitMQ:Port"]}");
@@ -83,10 +84,12 @@ public class MessageBusClient : BackgroundService
         {
             Console.WriteLine("MessageBusSubscriber: Event received!");
 
-            var body = ea.Body;
-            var notificationMessage = Encoding.UTF8.GetString(body.ToArray());
+            var eventStr = Encoding.UTF8.GetString(ea.Body.ToArray());
 
-            _eventProcessor.Process(notificationMessage);
+            Console.WriteLine($"MessageBusSubscriber: Event Body - {eventStr}");
+            var message = JsonSerializer.Deserialize<Message>(eventStr);
+
+            _eventProcessor.Process(message);
         };
 
         _channel.BasicConsume(queue: _queueName, autoAck: true, consumer: consumer);
