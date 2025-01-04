@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShopSphere.App.Clients;
+using ShopSphere.App.Clients.Models;
 using ShopSphere.App.Domain;
 using ShopSphere.App.Repos;
 using ShopSphere.App.ViewModels.Orders;
@@ -60,6 +61,8 @@ public class OrdersController : Controller
         order = await _orderRepo.Create(order);
 
         // publish model here - map to a read-only version of the order
+        var createdOrder = _mapper.Map<CreatedOrder>(order);
+        _messageBusClient.Publish(createdOrder);
 
         return RedirectToAction("");
     }
