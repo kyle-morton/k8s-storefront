@@ -17,4 +17,8 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ShopSphere.Services.Core\ShopSphere.Services.Core.csproj" />
+  </ItemGroup>
+
 </Project>
