@@ -3,6 +3,9 @@ using Microsoft.Extensions.Hosting;
 using ShopSphere.Notification.Clients.Models;
 using ShopSphere.Notification.Events;
 
+var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+Console.WriteLine($"Environment: {environmentName}");
+
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 // Register Automapper

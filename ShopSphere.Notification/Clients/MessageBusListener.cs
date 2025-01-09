@@ -11,17 +11,30 @@ namespace ShopSphere.Notification.Clients.Models;
 public class MessageBusListener : BackgroundService
 {
 
-    private readonly IConfiguration _config;
+    // private readonly IConfiguration _config;
+    private readonly string _host;
+    private readonly int _port;
     private readonly IEventProcessor _eventProcessor;
     private IConnection _connection;
     private IModel _channel;
     private string _queueName;
 
-    public MessageBusListener(IConfiguration config, IEventProcessor eventProcessor)
+    public MessageBusListener(IHostEnvironment _env, IConfiguration config, IEventProcessor eventProcessor)
     {
-        _config = config;
-        Console.WriteLine($"Config: {_config["RabbitMQ:Host"]}:{_config["RabbitMQ:Port"]}");
-
+        // quick and dirty fix for pushign to k8s, eventually pull from appSettings per env
+        if (_env.IsProduction()) 
+        {
+            _host = "rabbitmq-clusterip-srv";
+            _port = 5672;
+        }
+        else 
+        {
+            _host = "localhost";
+            _port = 5672;
+        }
+        
+        Console.WriteLine($"Environment: {_env.EnvironmentName}");
+        Console.WriteLine($"Config: {_host}:{_port.ToString()}");
 
         _eventProcessor = eventProcessor;
 
@@ -34,8 +47,8 @@ public class MessageBusListener : BackgroundService
     {
         var factory = new ConnectionFactory()
         {
-            HostName = _config["RabbitMQ:Host"],
-            Port = int.Parse(_config["RabbitMQ:Port"])
+            HostName = _host,
+            Port = _port
         };
 
         _connection = factory.CreateConnection();

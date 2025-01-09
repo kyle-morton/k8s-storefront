@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopsphere-notification-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopsphere-notification-app
+  template:
+    metadata:
+      labels:
+        app: shopsphere-notification-app
+    spec:
+      containers:
+        - name: shopsphere-notification-app
+          image: kylemorton5770/shopsphere-notification-srv:latest
