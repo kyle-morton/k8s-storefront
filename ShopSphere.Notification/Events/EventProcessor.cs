@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ShopSphere.Notification.Clients.Models;
+using ShopSphere.Services.Core.MessageBus.Events;
+using ShopSphere.Services.Core.MessageBus.Models;
 
 namespace ShopSphere.Notification.Events;
-
-public interface IEventProcessor {
-    void Process(Message message);
-}
 
 public class EventProcessor : IEventProcessor
 {
