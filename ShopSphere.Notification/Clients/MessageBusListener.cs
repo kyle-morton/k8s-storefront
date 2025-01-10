@@ -21,21 +21,21 @@ public class MessageBusListener : BackgroundService
 
     public MessageBusListener(IHostEnvironment _env, IConfiguration config, IEventProcessor eventProcessor)
     {
-        // // quick and dirty fix for pushign to k8s, eventually pull from appSettings per env
-        // if (_env.IsProduction()) 
-        // {
-        //     _host = "rabbitmq-clusterip-srv";
-        //     _port = 5672;
-        // }
-        // else 
-        // {
-        //     _host = "localhost";
-        //     _port = 5672;
-        // }
+        // quick and dirty fix for pushign to k8s, eventually pull from appSettings per env
+        //if (_env.IsProduction())
+        //{
+        //    _host = "rabbitmq-clusterip-srv";
+        //    _port = 5672;
+        //}
+        //else
+        //{
+        //    _host = "localhost";
+        //    _port = 5672;
+        //}
 
         _host = config["RabbitMQ:Host"];
         _port = int.Parse(config["RabbitMQ:Port"]);
-        
+
         Console.WriteLine($"Environment: {_env.EnvironmentName}");
         Console.WriteLine($"Config: {_host}:{_port.ToString()}");
 

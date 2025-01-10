@@ -8,14 +8,26 @@ using ShopSphere.Notification.Events;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-Console.WriteLine($"Environment: {environmentName}");
-Console.WriteLine($"CurrentDir: {Environment.CurrentDirectory}");
+var env = builder.Environment;
+Console.WriteLine($"Environment: {env}");
 
-builder.Configuration
-    .SetBasePath(Environment.CurrentDirectory)
-    .AddJsonFile("appsettings.json", false, true)
-    .AddEnvironmentVariables();
+List<KeyValuePair<string,string?>> inMemoryConfig;
+if (env.IsProduction()){
+    inMemoryConfig = new List<KeyValuePair<string, string?>>
+    {
+        new KeyValuePair<string, string?>("RabbitMQ:Host", "rabbitmq-clusterip-srv"),
+        new KeyValuePair<string, string?>("RabbitMQ:Port", "5672")
+    };
+}
+else {
+    inMemoryConfig = new List<KeyValuePair<string, string?>>
+    {
+        new KeyValuePair<string, string?>("RabbitMQ:Host", "localhost"),
+        new KeyValuePair<string, string?>("RabbitMQ:Port", "5672")
+    };
+}
+
+builder.Configuration.AddInMemoryCollection(initialData: inMemoryConfig);
 
 // Register Automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
