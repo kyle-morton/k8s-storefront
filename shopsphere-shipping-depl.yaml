@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopsphere-shipping-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopsphere-shipping-app
+  template:
+    metadata:
+      labels:
+        app: shopsphere-shipping-app
+    spec:
+      containers:
+        - name: shopsphere-shipping-app
+          image: kylemorton5770/shopsphere-shipping-srv:latest
