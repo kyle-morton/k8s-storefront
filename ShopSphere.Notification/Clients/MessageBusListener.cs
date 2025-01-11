@@ -1,8 +1,7 @@
 using Microsoft.Extensions.Configuration;
-using ShopSphere.Services.Core.MessageBus;
-using ShopSphere.Services.Core.MessageBus.Events;
+using ShopSphere.Notification.Events;
 
-namespace ShopSphere.Notification.Clients.Models;
+namespace ShopSphere.Notification.Clients;
 
 public class MessageBusListener : MessageBusListenerBase
 {

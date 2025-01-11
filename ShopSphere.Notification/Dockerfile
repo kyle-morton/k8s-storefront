@@ -1,8 +1,11 @@
+#NOTE: Docker will not let you go up a directory (../) for security reasons so you need move the dockerfile up a directory to support pulling in multiple build contexts
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
 # copy csproj to workdir, restore nuggets
 COPY *.csproj ./
+# COPY ../ShopSphere.Services.Core/*.csproj ./ ## DOESN'T WORK - SEE NOTE ABOVE
 RUN dotnet restore
 
 # publish app to local dir
